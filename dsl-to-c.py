@@ -26,7 +26,7 @@ class Call:
             param_str += p
             if i != len(self.params) - 1:
                 param_str += ", "
-        return f"{function}({param_str});\n"
+        return f"{self.func}({param_str});\n"
 class Slp:
     def __init__(self, seconds: float):
         self.time = seconds

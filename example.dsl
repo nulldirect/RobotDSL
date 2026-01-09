@@ -1,6 +1,7 @@
 call Optical.setLight : ledState::on;
 call UnloaderPiston.set : false;
 call descorer.set : false;
+var double : testVariable 0.5;
 drive_vel 25;
 turn_vel 30;
 rst 350;

@@ -45,6 +45,13 @@ class DriveVelFromC:
         self.vel = velocity
     def __str__(self):
         return f"drive_vel {self.vel};\n"
+class VarFromC:
+    def __init__(self, var_type: str, name: str, value: str):
+        self.name = name
+        self.v_type = var_type
+        self.value = value
+    def __str__(self):
+        return f"var {self.v_type} : {self.name} {self.value};\n"
 
 
 
@@ -62,13 +69,19 @@ for s in statements:
             output.append(l)
 
 dsl_code = ""
+variable_types = ["int", "double", "float", "bool"]
 # tokenize
 for s in output:
     if "{" in s or "}" in s:
         continue
     statement_sequence = s.strip().split("(")
     function = statement_sequence[0]
-    arguments = [i.strip() for i in statement_sequence[1].replace(")", "").split(",")]
+    # nothing
+    variable_statement = [0]
+    if len(statement_sequence) > 1:
+        arguments = [i.strip() for i in statement_sequence[1].replace(")", "").split(",")]
+    else:
+        variable_statement = function.split(" ")
     f = None
     if function == "Drivetrain.setHeading":
         f = RstFromC(arguments[0])
@@ -82,6 +95,9 @@ for s in output:
         f = TurnVelFromC(arguments[0])
     elif function == "Drivetrain.setDriveVelocity":
         f = DriveVelFromC(arguments[0])
+    elif variable_statement[0] in variable_types:
+        variable_statement.remove('=');
+        f = VarFromC(*variable_statement)
     else:
         f = CallFromC(function, *arguments);
     dsl_code += str(f)

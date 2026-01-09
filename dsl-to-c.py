@@ -42,6 +42,13 @@ class DriveVel:
         self.vel = velocity
     def __str__(self):
         return f"Drivetrain.setDriveVelocity({self.vel});\n"
+class Var:
+    def __init__(self, name: str, var_type: str, value):
+        self.name = name
+        self.v_type = var_type
+        self.value = value
+    def __str__(self):
+        return f"{self.v_type} {self.name} = {self.value};\n"
 
 
 
@@ -80,6 +87,8 @@ for s in output:
         f = TurnVel(*arguments);
     if to_call == "drive_vel":
         f = DriveVel(*arguments);
+    if to_call == "var":
+        f = Var(arguments[2], arguments[0], arguments[3])
     c_code += "\t" + str(f)
 
 c_code += "}"

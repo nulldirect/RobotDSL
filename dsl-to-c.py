@@ -58,7 +58,7 @@ for s in statements:
         if not cleaned.startswith("//") and cleaned:
             output.append(l)
 
-c_code = ""
+c_code = "void " + sys.argv[1].split(".")[0] + "() {\n"
 # tokenize
 for s in output:
     statement_sequence = s.split(" ")
@@ -80,8 +80,9 @@ for s in output:
         f = TurnVel(*arguments);
     if to_call == "drive_vel":
         f = DriveVel(*arguments);
-    c_code += str(f)
+    c_code += "\t" + str(f)
 
+c_code += "}"
 print(c_code)
 with open(sys.argv[1].replace("dsl", "c"), "w") as f:
     f.write(c_code)

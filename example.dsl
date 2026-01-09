@@ -1,15 +1,32 @@
-// sets imu to 350 degrees
+call Optical.setLight : ledState::on;
+call UnloaderPiston.set : false;
+call descorer.set : false;
+drive_vel 25;
+turn_vel 30;
 rst 350;
-// turn to 180 degrees
+turn 350;
+call Collect;
+call driveTime : 33,1500;
+turn 225;
+call driveTime : -16,500;
+call StopStage;
+call TopScore;
+call UnloaderPiston.set : true;
+slp 1000;
+call StopStage;
+turn 180+55;
+drive 60;
 turn 180;
-// drive 20mm 
-drive 20;
-// call a with b, c, d -> a(b,c,d), the function is a C function
-// i won't add anything to define functions in here
-call a : b,c,d;
-// waits for 500 ms
+drive_vel 40;
+call Drivetrain.drive : forward;
+call Collect;
+slp 1000;
+call Drivetrain.stop;
+drive -1;
+call Collect;
 slp 500;
-// sets the drive velocity to 50 percent;
-drive_vel 50;
-// sets the turn velocity to 50 percent;
-turn_vel 50;
+call StopStage;
+call Drivetrain.drive : reverse;
+slp 1000;
+call Drivetrain.stop;
+call TopScore;

@@ -1,0 +1,12 @@
+// sets imu to 350 degrees
+rst 350;
+// turn to 180 degrees with 10% min, 50% max, and .5 tolerance
+turn 180 10 50 .5;
+// drive 20in with a trapeziodal profile, and 10% min 50% max speeds
+drive 20 trap 10 50;
+// call a with b, c, d -> a(b,c,d), the function is a c function
+// i won't add anything to define functions in here
+call a : b,c,d;
+// waits for 500 ms
+slp 500;
+

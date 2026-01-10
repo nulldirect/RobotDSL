@@ -1,10 +1,13 @@
+//def double add : double a , double b;
+//ret a+b;
+//enddef;
 call Optical.setLight : ledState::on;
 call UnloaderPiston.set : false;
 call descorer.set : false;
-var double : testVariable 0.5;
+var double : a 0.5;
 drive_vel 25;
 turn_vel 30;
-rst 350;
+rst 350 degrees;
 turn 350;
 call Collect;
 call driveTime : 33,1500;

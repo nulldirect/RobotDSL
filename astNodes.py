@@ -213,7 +213,7 @@ class Func(SpecialASTNode):
         return f"{self.return_type} {self.name}({", ".join(params)}) {{"
     def emit_dsl(self):
         params = self.parse_c(*self.params)
-        return f"func {self.name} : ({", ".join(params)});"
+        return f"func {self.name} : ({", ".join(params)}) -> {self.return_type};"
     def parse_c(self, *parameters) -> list[str]:
         params = list(parameters)
         self.return_type = params[0]

@@ -68,6 +68,15 @@ class DriveVel(ASTNode):
     def emit_dsl(self):
         return f"drive_vel {self.vel} {self.unit};"
     
+class Use(ASTNode):
+    def __init__(self, use_type: str, namespace: str) -> None:
+        self.use_type = use_type
+        self.namespace = namespace
+    def emit_c(self):
+        return f"using {self.use_type} {self.namespace};"
+    def emit_dsl(self):
+        return f"use {self.use_type} {self.namespace};"
+    
 class End(ASTNode):
     def emit_c(self):
         return "}"
@@ -102,7 +111,7 @@ class Call(SpecialASTNode):
         func = call_params[0]
         f_params = call_params[1:]
         if f_params != []:
-            return f"call {func} : {",".join(f_params)};"
+            return f"call {func} : ({", ".join(f_params)});"
         else:
             return f"call {func};"
         
@@ -213,7 +222,10 @@ class Func(SpecialASTNode):
         return f"{self.return_type} {self.name}({", ".join(params)}) {{"
     def emit_dsl(self):
         params = self.parse_c(*self.params)
-        return f"func {self.name} : ({", ".join(params)}) -> {self.return_type};"
+        if len(params) > 1:
+            return f"func {self.name} : ({", ".join(params)}) -> {self.return_type};"
+        else:
+            return f"func {self.name} -> {self.return_type};"
     def parse_c(self, *parameters) -> list[str]:
         params = list(parameters)
         self.return_type = params[0]
@@ -235,4 +247,7 @@ class Func(SpecialASTNode):
             self.return_type = params[-1]
             self.name = params[0]
             return type_name_pairs
-        raise NotImplementedError # don't allow functions with no parameters, but with return type because
+        else:
+            self.return_type = params[-1]
+            self.name = params[0]
+            return []

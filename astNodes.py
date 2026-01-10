@@ -51,20 +51,22 @@ class Slp(ASTNode):
         return f"slp {self.time};"
     
 class TurnVel(ASTNode):
-    def __init__(self, velocity: float):
+    def __init__(self, velocity: float, unit: str):
         self.vel = velocity
+        self.unit = unit
     def emit_c(self):
-        return f"Drivetrain.setTurnVelocity({self.vel});"
+        return f"Drivetrain.setTurnVelocity({self.vel}, {self.unit});"
     def emit_dsl(self):
-        return f"turn_vel {self.vel};"
+        return f"turn_vel {self.vel} {self.unit};"
     
 class DriveVel(ASTNode):
-    def __init__(self, velocity: float):
+    def __init__(self, velocity: float, unit: str):
         self.vel = velocity
+        self.unit = unit
     def emit_c(self):
-        return f"Drivetrain.setDriveVelocity({self.vel});"
+        return f"Drivetrain.setDriveVelocity({self.vel}, {self.unit});"
     def emit_dsl(self):
-        return f"drive_vel {self.vel};"
+        return f"drive_vel {self.vel} {self.unit};"
     
 class End(ASTNode):
     def emit_c(self):

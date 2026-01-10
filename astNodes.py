@@ -96,7 +96,9 @@ class Ret(ASTNode):
             return f"ret {self.value};"
         else:
             return "ret;"
-
+class NotImpl:
+    def __init__(self, *args):
+        raise NotImplementedError(f"Function with args: {args} is not implemented")
 # Special AST Nodes are nodes that require complex parsing in order to use
 class Call(SpecialASTNode):
     def __init__(self, *parameters):

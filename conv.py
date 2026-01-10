@@ -9,9 +9,8 @@ def parse_cpp_statement(s):
     args = tokens[1:]
     # assume that if it starts with type, and has opening curly brace, its a function
     if cmd in astCommands.ALLOWED_VARIABLE_TYPES and "{" in args:
-        # args.insert(0, cmd)
-        # cmd = "func"
-        raise NotImplementedError("Function support has been removed due to not having a way to use return values at the moment")
+        args.insert(0, cmd)
+        cmd = "func"
     elif cmd in astCommands.ALLOWED_VARIABLE_TYPES:
         args.insert(0, cmd) # add type as argument
         cmd = "var"
@@ -76,7 +75,6 @@ for node in nodes:
         output_code += "   " * block_level + f() + "\n"
     else:
         output_code += "   " * block_level + f() + "\n"
-    
 print(output_code)
 with open(sys.argv[1].replace(start, target), "w") as f:
     f.write(output_code)
